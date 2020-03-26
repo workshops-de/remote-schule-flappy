@@ -1,8 +1,12 @@
-# Flappy Bird example code to teach people basic of coding
+# Clumsy Bird example code to teach people basic of coding
 
-Step by Step solution.
+In this basic example we going to show people the basics of coding with a game called Clumsy Bird.
 
-## How to 
+It's based and forked from [this version](http://ellisonleao.github.io/clumsy-bird/). Thanks [Ellison Leão](https://github.com/ellisonleao) for providing this.
+
+We're not going to create the game the same way or so detailed like in the orginal version. It's more like a basic direction.
+
+## How to do it!? :) 
 
 First of all you should create a new folder on your computer to put some files that are related to this project.
 You need a Browser, a IDE and a webserver to run this example.
@@ -31,3 +35,6 @@ To install this you need to run the following steps.
 5) Click the message or open your browser `http://127.0.0.1:8080`
 
 You now have a local website you could run.
+
+
+Happy coding & learning!
