@@ -19,12 +19,17 @@
 <script>
     // Important that script is after the body tag in our case
 
-    var text = "Hallo Welt!!";
-    function sayHello() {
-        console.log(text);
+    var backgroundPosition = 0;
+
+    function moveBackgroundForward() {
+        backgroundPosition = backgroundPosition - 1;
+
+        // Access elements in the html strucutre
+        document.body.style.backgroundPositionX = backgroundPosition + "px";
     }
 
-    sayHello();
+    // setInterval = execute function every x milliseconds
+    setInterval(moveBackgroundForward, 10);
 </script>
 
 </html>
