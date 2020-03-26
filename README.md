@@ -35,6 +35,7 @@ To install this you need to run the following steps.
 5) Click the message or open your browser `http://127.0.0.1:8080`
 
 You now have a local website you could run.
+Without any files you'll just see something like "Index of". That is correct for now. We going to fix this in the next steps! =)
 
 
 Happy coding & learning!
