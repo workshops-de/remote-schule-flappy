@@ -15,11 +15,26 @@
         left: 100px;
     }
 
-    #pipe-1,
-    #pipe-2,
-    #pipe-3 {
+    #pipe-1-top,
+    #pipe-2-top,
+    #pipe-3-top,
+    #pipe-1-bottom,
+    #pipe-2-bottom,
+    #pipe-3-bottom {
         height: 100%;
         position: absolute;
+    }
+
+    #pipe-1-top,
+    #pipe-2-top,
+    #pipe-3-top {
+        display: block;
+    }
+
+    #pipe-1-bottom,
+    #pipe-2-bottom,
+    #pipe-3-bottom {
+        transform: scaleY(-1);
     }
 </style>
 
@@ -36,6 +51,12 @@
 </body>
 
 <script>
+
+    // Globals
+    var screenWidth = 1000;
+    var screenHeight = 600;
+    var pipeHeight = 1664;
+
     // Important that script is after the body tag in our case
 
     var backgroundPosition = 0;
@@ -82,22 +103,25 @@
     var pipes = [
         {
             selector: "pipe-1",
-            left: 1000,
+            left: 1200,
             top: -300,
-            offset: 1000
+            spread: 300,
+            offset: 1200
         },
         {
             selector: "pipe-2",
-            left: 600,
+            left: 800,
             top: -300,
-            offset: 1000
+            spread: 300,
+            offset: 1200
         },
         {
             selector: "pipe-3",
             left: 400,
             top: -300,
-            offset: 1000
-        },
+            spread: 300,
+            offset: 1200
+        }
     ]
 
     function updatePipe(pipe) {
@@ -108,13 +132,18 @@
         // When we hit start of the display reset
         if (pipe.left < 0) {
             pipe.left = pipe.offset;
-            pipe.top = -Math.floor(Math.random() * 300);
+            pipe.top = -Math.floor(Math.random() * (screenHeight - 200));
         }
 
         // Update the element style values
-        var pipeElement = document.getElementById(pipe.selector);
+        var pipeElement = document.getElementById(pipe.selector + "-top");
         pipeElement.style.left = pipe.left + "px";
         pipeElement.style.top = pipe.top + "px";
+
+        var pipeElement = document.getElementById(pipe.selector + "-bottom");
+        pipeElement.style.left = pipe.left + "px";
+        pipeElement.style.top = pipe.top + pipeHeight / 2 + "px";
+
     }
 
 
