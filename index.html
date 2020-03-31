@@ -15,7 +15,9 @@
         left: 100px;
     }
 
-    #pipe {
+    #pipe-1,
+    #pipe-2,
+    #pipe-3 {
         height: 100%;
         position: absolute;
     }
@@ -24,7 +26,12 @@
 <body>
     <div id="frame">
         <img id="bird" src="assets/img/clumsy.png">
-        <img id="pipe" src="assets/img/pipe.png">
+        <img id="pipe-1-top" src="assets/img/pipe.png">
+        <img id="pipe-2-top" src="assets/img/pipe.png">
+        <img id="pipe-3-top" src="assets/img/pipe.png">
+        <img id="pipe-1-bottom" src="assets/img/pipe.png">
+        <img id="pipe-2-bottom" src="assets/img/pipe.png">
+        <img id="pipe-3-bottom" src="assets/img/pipe.png">
     </div>
 </body>
 
@@ -72,28 +79,42 @@
 
 
     // All about Pipes
-    var pipe = {
-        left: 0,
-        top: -300,
-        start: 1000
-    }
+    var pipes = [
+        {
+            selector: "pipe-1",
+            left: 1000,
+            top: -300,
+            offset: 1000
+        },
+        {
+            selector: "pipe-2",
+            left: 600,
+            top: -300,
+            offset: 1000
+        },
+        {
+            selector: "pipe-3",
+            left: 400,
+            top: -300,
+            offset: 1000
+        },
+    ]
 
-    function updatePipe() {
+    function updatePipe(pipe) {
 
         // Update positon for the pipe
-        pipe.left++;
+        pipe.left--;
 
         // When we hit start of the display reset
-        if (pipe.left == pipe.start) {
-            pipe.left = 0;
+        if (pipe.left < 0) {
+            pipe.left = pipe.offset;
+            pipe.top = -Math.floor(Math.random() * 300);
         }
 
-        // Calculate current pipe position
-        var currentPipePosition = (pipe.start - pipe.left);
-
         // Update the element style values
-        document.getElementById("pipe").style.left = currentPipePosition + "px";
-        document.getElementById("pipe").style.top = pipe.top + "px";
+        var pipeElement = document.getElementById(pipe.selector);
+        pipeElement.style.left = pipe.left + "px";
+        pipeElement.style.top = pipe.top + "px";
     }
 
 
@@ -102,7 +123,9 @@
     function updateGame() {
         moveBackgroundForward();
         updateBirdPosition();
-        updatePipe();
+        updatePipe(pipes[0]);
+        updatePipe(pipes[1]);
+        updatePipe(pipes[2]);
     }
 
     // setInterval = execute function every x milliseconds
