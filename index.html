@@ -9,11 +9,15 @@
         background-image: url(assets/img/bg.png);
         background-size: cover;
     }
+
+    #bird {
+        position: absolute;
+    }
 </style>
 
 <body>
     <div id="frame">
-        <img src="assets/img/clumsy.png">
+        <img id="bird" src="assets/img/clumsy.png">
     </div>
 </body>
 
@@ -29,8 +33,21 @@
         document.body.style.backgroundPositionX = backgroundPosition + "px";
     }
 
+
+    var birdPosition = 0;
+    function moveBirdForward() {
+        birdPosition += 1;
+
+        document.getElementById("bird").style.left = birdPosition + "px";
+    }
+
+    function updateGame() {
+        moveBackgroundForward();
+        moveBirdForward();
+    }
+
     // setInterval = execute function every x milliseconds
-    setInterval(moveBackgroundForward, 10);
+    setInterval(updateGame, 10);
 </script>
 
 </html>
