@@ -14,11 +14,17 @@
         position: absolute;
         left: 100px;
     }
+
+    #pipe {
+        height: 100%;
+        position: absolute;
+    }
 </style>
 
 <body>
     <div id="frame">
         <img id="bird" src="assets/img/clumsy.png">
+        <img id="pipe" src="assets/img/pipe.png">
     </div>
 </body>
 
@@ -64,9 +70,39 @@
         document.getElementById("bird").style.top = birdPosition + "px";
     }
 
+
+    // All about Pipes
+    var pipe = {
+        left: 0,
+        top: -300,
+        start: 1000
+    }
+
+    function updatePipe() {
+
+        // Update positon for the pipe
+        pipe.left++;
+
+        // When we hit start of the display reset
+        if (pipe.left == pipe.start) {
+            pipe.left = 0;
+        }
+
+        // Calculate current pipe position
+        var currentPipePosition = (pipe.start - pipe.left);
+
+        // Update the element style values
+        document.getElementById("pipe").style.left = currentPipePosition + "px";
+        document.getElementById("pipe").style.top = pipe.top + "px";
+    }
+
+
+
+
     function updateGame() {
         moveBackgroundForward();
         updateBirdPosition();
+        updatePipe();
     }
 
     // setInterval = execute function every x milliseconds
