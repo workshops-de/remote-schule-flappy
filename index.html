@@ -21,7 +21,6 @@
     #pipe-1-bottom,
     #pipe-2-bottom,
     #pipe-3-bottom {
-        height: 100%;
         position: absolute;
     }
 
@@ -104,24 +103,24 @@
     var pipes = [
         {
             selector: "pipe-1",
-            left: 1200,
-            middle: -300,
-            spread: 100,
-            offset: 1200
+            left: 0,
+            middle: 100,
+            distance: 200,
+            offset: 148*8
         },
         {
             selector: "pipe-2",
-            left: 800,
-            middle: -300,
-            spread: 100,
-            offset: 1200
+            left: 148*3,
+            middle: 200,
+            distance: 300,
+            offset: 148*8
         },
         {
             selector: "pipe-3",
-            left: 400,
-            middle: -300,
-            spread: 100,
-            offset: 1200
+            left: 148*6,
+            middle: 400,
+            distance: 250,
+            offset: 148*8
         }
     ]
 
@@ -131,24 +130,22 @@
         pipe.left--;
 
         // When we hit start of the display reset
-        if (pipe.left < 0) {
+        if (pipe.left < -148) {
             pipe.left = pipe.offset;
 
             // Minimum spread size to go throw at top & bottom
-            var upperBoundary = pipe.spread;
-            var lowerBoundary = screenHeight - pipe.spread;
-
-            pipe.middle = -(Math.floor(Math.random() * lowerBoundary)) - upperBoundary;
+            pipe.middle = Math.floor(Math.random()*(screenHeight-200)+100);
+            pipe.distance = Math.floor(Math.random()*200) + 100;
         }
 
         // Update the element style values
         var pipeElement = document.getElementById(pipe.selector + "-top");
         pipeElement.style.left = pipe.left + "px";
-        pipeElement.style.top = (pipe.middle) + "px";
+        pipeElement.style.top = -1664 + pipe.middle + "px";
 
         var pipeElement = document.getElementById(pipe.selector + "-bottom");
         pipeElement.style.left = pipe.left + "px";
-        pipeElement.style.top = (pipe.middle + pipe.spread + screenHeight) + "px";
+        pipeElement.style.top = (pipe.middle + pipe.distance) + "px";
 
     }
 
