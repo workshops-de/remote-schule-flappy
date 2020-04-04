@@ -62,6 +62,17 @@
 
     var backgroundPosition = 0;
 
+    function boxCollision(box1, box2) {
+      if ( (box1.x < box2.x + box2.width) &&
+           (box1.x + box1.width > box2.x) &&
+           (box1.y < box2.y + box2.height) &&
+           (box1.y + box1.height > box2.y)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
     function moveBackgroundForward() {
         backgroundPosition = backgroundPosition - 1;
 
@@ -148,12 +159,47 @@
       pipeElement.style.top = (pipe.middle + pipe.distance) + "px";
     }
 
+    function collisionDetection(pipe) {
+      // top pipe
+      if (boxCollision({
+        x: 100,
+        y: birdPosition,
+        width: 85,
+        height: 60
+      }, {
+        x: pipe.left,
+        y: -pipeHeight + pipe.middle,
+        width: 148,
+        height: pipeHeight
+      })) {
+        console.log("COLLIDE");
+      }
+
+      // bottom pipe
+      if (boxCollision({
+        x: 100,
+        y: birdPosition,
+        width: 85,
+        height: 60
+      }, {
+        x: pipe.left,
+        y: pipe.middle + pipe.distance,
+        width: 148,
+        height: pipeHeight
+      })) {
+        console.log("COLLIDE");
+      }
+    }
+
     function updateGame() {
         moveBackgroundForward();
         updateBirdPosition();
         updatePipe(pipes[0]);
         updatePipe(pipes[1]);
         updatePipe(pipes[2]);
+        collisionDetection(pipes[0]);
+        collisionDetection(pipes[1]);
+        collisionDetection(pipes[2]);
     }
 
     // setInterval = execute function every x milliseconds
