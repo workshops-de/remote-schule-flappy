@@ -104,56 +104,49 @@
     var pipes = [
         {
             selector: "pipe-1",
-            left: 1036,
-            middle: 300,
-            spread: 250,
-            offset: 1036
+            left: 0,
+            middle: 100,
+            distance: 200,
+            offset: 148*8
         },
         {
             selector: "pipe-2",
-            left: 1036 + 148 * 3,
-            middle: 300,
-            spread: 250,
-            offset: 1036
+            left: 148*3,
+            middle: 200,
+            distance: 300,
+            offset: 148*8
         },
         {
             selector: "pipe-3",
-            left: 1036 + 148 * 6,
-            middle: 300,
-            spread: 250,
-            offset: 1036
+            left: 148*6,
+            middle: 400,
+            distance: 250,
+            offset: 148*8
         }
     ]
 
     function updatePipe(pipe) {
+      // Update positon for the pipe
+      pipe.left--;
 
-        // Update positon for the pipe
-        pipe.left--;
+      // When we hit start of the display reset
+      if (pipe.left < -148) {
+          pipe.left = pipe.offset;
 
-        // When we hit start of the display reset
-        if (pipe.left < -pipeWidth) {
-            pipe.left = pipe.offset;
+          // Minimum spread size to go throw at top & bottom
+          pipe.middle = Math.floor(Math.random()*(screenHeight-200)+100);
+          pipe.distance = Math.floor(Math.random()*200) + 100;
+      }
 
-            // Minimum spread size to go throw at top & bottom
-            var upperBoundary = 100;
-            var lowerBoundary = screenHeight - 100;
+      // Update the element style values
+      var pipeElement = document.getElementById(pipe.selector + "-top");
+      pipeElement.style.left = pipe.left + "px";
+      pipeElement.style.top = -pipeHeight + pipe.middle + "px";
 
-            pipe.middle = (Math.floor(Math.random() * lowerBoundary)) + upperBoundary;
-        }
-
-        // Update the element style values
-        var pipeElement = document.getElementById(pipe.selector + "-top");
-        pipeElement.style.left = pipe.left + "px";
-        pipeElement.style.top = (-pipeHeight + pipe.middle) + "px";
-
-        var pipeElement = document.getElementById(pipe.selector + "-bottom");
-        pipeElement.style.left = pipe.left + "px";
-        pipeElement.style.top = (pipe.middle + pipe.spread) + "px";
-
+      var pipeElement = document.getElementById(pipe.selector + "-bottom");
+      pipeElement.style.left = pipe.left + "px";
+      pipeElement.style.top = (pipe.middle + pipe.distance) + "px";
     }
-
-
-
 
     function updateGame() {
         moveBackgroundForward();
