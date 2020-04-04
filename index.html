@@ -46,6 +46,14 @@
       font-size: 40px;
       font-weight: bold;
     }
+
+    #gameover {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-left: -122px;
+      margin-top: -66px;
+    }
 </style>
 
 <body>
@@ -58,6 +66,7 @@
         <img id="pipe-2-bottom" src="assets/img/pipe.png">
         <img id="pipe-3-bottom" src="assets/img/pipe.png">
         <div id="score">0</div>
+        <img id="gameover" src="assets/img/gameover.png">
     </div>
 </body>
 
@@ -73,6 +82,7 @@
 
     var backgroundPosition = 0;
     var score = 0;
+    var gameState = "GAMEOVER";
 
     function boxCollision(box1, box2) {
       if ( (box1.x < box2.x + box2.width) &&
@@ -108,6 +118,16 @@
             RIGHT:  39,
             DOWN:   40
         */
+
+        if (event.keyCode == 32) {
+          if (gameState == "GAMEOVER") {
+            gameState = "PLAYING";
+            score = 0;
+            pipes[0].left = 148*8;
+            pipes[1].left = 148*8+148*3;
+            pipes[2].left = 148*8+148*6;
+          }
+        }
         if (event.keyCode == 38) {
             moveBirdUp();
         }
@@ -127,21 +147,21 @@
     var pipes = [
         {
             selector: "pipe-1",
-            left: 0,
+            left: 148*8,
             middle: 100,
             distance: 200,
             offset: 148*8
         },
         {
             selector: "pipe-2",
-            left: 148*3,
+            left: 148*8+148*3,
             middle: 200,
             distance: 300,
             offset: 148*8
         },
         {
             selector: "pipe-3",
-            left: 148*6,
+            left: 148*8+148*6,
             middle: 400,
             distance: 250,
             offset: 148*8
@@ -188,9 +208,7 @@
         width: 148,
         height: pipeHeight
       })) {
-        score = 0;
-        var scoreElement = document.getElementById("score");
-        scoreElement.innerHTML = score;
+        gameState = "GAMEOVER";
       }
 
       // bottom pipe
@@ -205,21 +223,36 @@
         width: 148,
         height: pipeHeight
       })) {
-        score = 0;
-        var scoreElement = document.getElementById("score");
-        scoreElement.innerHTML = score;
+        gameState = "GAMEOVER";
       }
     }
 
     function updateGame() {
-        moveBackgroundForward();
+      moveBackgroundForward();
+      updatePipe(pipes[0]);
+      updatePipe(pipes[1]);
+      updatePipe(pipes[2]);
+
+      if (gameState == "GAMEOVER") {
+        var scoreElement = document.getElementById("score");
+        scoreElement.style.display = "none";
+        var birdElement = document.getElementById("bird");
+        birdElement.style.display = "none";
+        var gameoverElement = document.getElementById("gameover");
+        gameoverElement.style.display = "block";
+      } else {
+        var scoreElement = document.getElementById("score");
+        scoreElement.style.display = "block";
+        var birdElement = document.getElementById("bird");
+        birdElement.style.display = "block";
+        var gameoverElement = document.getElementById("gameover");
+        gameoverElement.style.display = "none";
+
         updateBirdPosition();
-        updatePipe(pipes[0]);
-        updatePipe(pipes[1]);
-        updatePipe(pipes[2]);
         collisionDetection(pipes[0]);
         collisionDetection(pipes[1]);
         collisionDetection(pipes[2]);
+      }
     }
 
     // setInterval = execute function every x milliseconds
